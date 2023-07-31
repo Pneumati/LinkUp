@@ -1,6 +1,7 @@
 // ignore_for_file: unused_import
 
-import 'dart:js';
+// ignore: avoid_web_libraries_in_flutter
+
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -15,13 +16,13 @@ import 'package:projectwrk/ui/student.dart';
 import 'package:projectwrk/bookappointmnet.dart';
 import 'package:projectwrk/help.dart';
 import 'package:projectwrk/viewaptstu.dart';
-import 'package:projectwrk/bookappsu.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'firebase_options.dart';
 
-void main(List<String> args) {
-  WidgetsFlutterBinding.ensureInitialized();
+Future<void> main(List<String> args)  async {
+  WidgetsFlutterBinding.ensureInitialized();await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MaterialApp(
     title: "link up ",
     home: Homepage(
@@ -34,7 +35,7 @@ void main(List<String> args) {
       '/lecturer/': (context) => const Lecturer(),
       '/Signup/':(context) => SignUp(obsecureText: true, hintText: ''),
       '/Student/': (context) => const Studentfirstpage(),
-      '/bookappointment/':(contect) => const Bookappointment()
+      '/bookappointment/':(context) =>  Bookappointment()
   } ,
     debugShowCheckedModeBanner: false,
   ));
@@ -55,16 +56,14 @@ class _HomepageState extends State<Homepage> {
   }
 
   Future<void> checkUserAuthentication() async {
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    
     final User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       // User is logged in, navigate to the next page
-       Navigator.of(context as BuildContext).pushNamedAndRemoveUntil( '/Firstpage/', (route) => false);
-      
+      Navigator.of(context as BuildContext).pushNamedAndRemoveUntil('/Firstpage/', (route) => false);
     } else {
       // User is not logged in, show the login screen
-      Navigator.of(context as BuildContext).pushNamedAndRemoveUntil( '/Login/', (route) => false);
-      
+      Navigator.of(context as BuildContext).pushNamedAndRemoveUntil('/Login/', (route) => false);
     }
   }
 
@@ -84,8 +83,7 @@ class _HomepageState extends State<Homepage> {
 
 
 
-
-  
+ /* 
   class VerifyEmail extends StatefulWidget{
   const VerifyEmail({super.key});
 
@@ -112,4 +110,4 @@ class _HomepageState extends State<Homepage> {
       ],
     );
   }
-  }
+  }*/

@@ -8,6 +8,8 @@ import 'package:projectwrk/firstpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:projectwrk/signup.dart';
 import 'firebase_options.dart';
+import 'package:flutter/gestures.dart';
+
 
 class Login extends StatefulWidget {
   final bool obsecureText;
@@ -110,51 +112,43 @@ class _LoginState extends State<Login> {
                 controller: _password,
               )),
           const Text(" "),
-         ElevatedButton(
-  onPressed: (_email.text.isNotEmpty && _password.text.isNotEmpty) ? () async {
-    final email = _email.text;
-    final password = _password.text;
+ ElevatedButton(
+              onPressed: () async {
+               
+                final email = _email.text;
+                final password = _password.text;
+               try{
+                await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password,);
+                // ignore: use_build_context_synchronously
+                Navigator.of(context).pushNamed('/Firstpage/',);
+               } 
+               on FirebaseAuthException catch (e) {
+              if (e.code == 'user-not-found') {
+                Fluttertoast.showToast(msg: "User not found",
+                    gravity: ToastGravity.CENTER,
+                    backgroundColor: Colors.blue);
+              } 
+              else if(e.code == 'wrong-password'){
+                 Fluttertoast.showToast(msg: "Wrong Password",
+                    gravity: ToastGravity.CENTER,
+                    backgroundColor: Colors.blue);
+              }
+              else{
+                Fluttertoast.showToast(msg: e.code,
+                    gravity: ToastGravity.CENTER,
+                    backgroundColor: Colors.blue);
+              }
+              
+               }
+              },
+              child: const Text("Login")),
 
-    if (email.isEmpty || password.isEmpty) {
-      Fluttertoast.showToast(
-        msg: "Please provide both email and password",
-        gravity: ToastGravity.CENTER,
-        backgroundColor: Colors.blue,
-      );
-    } else {
-      try {
-        final UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email,
-          password: password,
-        );
+  
 
-        // Login is successful, navigate to the Firstpage
-         Navigator.of(context).pushNamedAndRemoveUntil( '/Firstpage/', (route) => false);
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'user-not-found') {
-          Fluttertoast.showToast(
-            msg: "User not found",
-            gravity: ToastGravity.CENTER,
-            backgroundColor: Colors.blue,
-          );
-        } else if (e.code == 'wrong-password') {
-          Fluttertoast.showToast(
-            msg: "Wrong Password",
-            gravity: ToastGravity.CENTER,
-            backgroundColor: Colors.blue,
-          );
-        } else {
-          // Handle other FirebaseAuthException codes
-        }
-      }
-    }
-  } : null, // Set onPressed to null when either email or password is empty
-  child: const Text("Login"),
-),
 
 
          TextButton(onPressed: () {
-           Navigator.of(context).pushNamedAndRemoveUntil( '/Signup/', (route) => false);
+             Navigator.of(context).pushNamed('/SignUp/', );
          }, child: const Text("Sign Up"))
         
         ]

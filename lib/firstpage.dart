@@ -1,7 +1,5 @@
 // ignore_for_file: unnecessary_import, unused_import, unnecessary_new
 
-import 'dart:io';
-import 'dart:ui';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -56,11 +54,8 @@ class _FirstpageState extends State<Firstpage> {
                   const VisualDensity(horizontal: 3.3, vertical: 3.3),
               dense: true,
               subtitle: TextButton(
-                  onPressed: () async {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Lecturer()));
+                  onPressed: ()  {
+                    Navigator.of(context).pushNamed('/lecturer/', );
                   },
                   child: const Text(
                     "A Lecturer",
@@ -76,11 +71,8 @@ class _FirstpageState extends State<Firstpage> {
             visualDensity: const VisualDensity(horizontal: 3.3, vertical: 3.3),
             dense: true,
             subtitle: TextButton(
-                onPressed: () async {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const Studentfirstpage()));
+                onPressed: ()  {
+                Navigator.of(context).pushNamed('/Student/', );
                 },
                 child: const Text(
                   " A Student",

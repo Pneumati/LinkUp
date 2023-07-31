@@ -8,6 +8,7 @@ import 'package:projectwrk/ui/login.dart';
 import 'package:projectwrk/ui/student.dart';
 import 'firebase_options.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/gestures.dart';
 
 
 class SignUp extends StatefulWidget {
@@ -110,50 +111,38 @@ class _SignUpState extends State<SignUp> {
                 controller: _password,
               )),
           const Text(" "),
-         ElevatedButton(
-  onPressed: (_email.text.isNotEmpty && _password.text.isNotEmpty) ? () async {
-    final email = _email.text;
-    final password = _password.text;
+          ElevatedButton(
+              onPressed: () async {
+               
+                final email = _email.text;
+                final password = _password.text;
+                try{
+                    final UserCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+                }on FirebaseAuthException catch (e){
+                  if (e.code == 'weak-password') {
+                    Fluttertoast.showToast(msg: "Weak Password",
+                    gravity: ToastGravity.CENTER,
+                    backgroundColor: Colors.blue);
+                  }
+                  else if(e.code == 'email-already-in-use'){
+                     Fluttertoast.showToast(msg: "Email already exists",
+                    gravity: ToastGravity.CENTER,
+                    backgroundColor: Colors.blue);
+                  }
+                  else if (e.code == 'invalid-email'){
+                    Fluttertoast.showToast(msg: "Invalid Email",
+                    gravity: ToastGravity.CENTER,
+                    backgroundColor: Colors.blue);
+                  }
+                  
+                  else {
+                Navigator.push(context,
+                   MaterialPageRoute(builder: (context) => Login(obsecureText: true, hintText: '')));}
+                }
+               
+              },
 
-    if (email.isEmpty || password.isEmpty) {
-      Fluttertoast.showToast(
-        msg: "Please provide both email and password",
-        gravity: ToastGravity.CENTER,
-        backgroundColor: Colors.blue,
-      );
-    } else {
-      try {
-        final UserCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: email,
-          password: password,
-        );
-        // If sign up is successful, you can navigate to the next page or show a success message.
-        Navigator.of(context).pushNamedAndRemoveUntil( '/Firstpage/', (route) => false);
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'weak-password') {
-          Fluttertoast.showToast(
-            msg: "Weak Password",
-            gravity: ToastGravity.CENTER,
-            backgroundColor: Colors.blue,
-          );
-        } else if (e.code == 'email-already-in-use') {
-          Fluttertoast.showToast(
-            msg: "Email already exists",
-            gravity: ToastGravity.CENTER,
-            backgroundColor: Colors.blue,
-          );
-        } else if (e.code == 'invalid-email') {
-          Fluttertoast.showToast(
-            msg: "Invalid Email",
-            gravity: ToastGravity.CENTER,
-            backgroundColor: Colors.blue,
-          );
-        } else {
-          // Handle other FirebaseAuthException codes
-        }
-      }
-    }
-  } : null, // Set onPressed to null when either email or password is empty
+
   child: Text('Sign Up'),
 ),
 

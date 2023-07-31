@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+
+
 class Booklec extends StatelessWidget {
   const Booklec({super.key});
 
@@ -43,8 +45,8 @@ class Booklec extends StatelessWidget {
                         borderSide: BorderSide(color: Colors.blueGrey)),
                     fillColor: Colors.white,
                     filled: true,
-                    labelText: "Enter Department",
-                    hintText: "Departmrent",
+                    labelText: "Enter Office number",
+                    hintText: "Office number",
                     border: OutlineInputBorder()),
                
               )),
@@ -74,8 +76,8 @@ class Booklec extends StatelessWidget {
                         borderSide: BorderSide(color: Colors.blueGrey)),
                     fillColor: Colors.white,
                     filled: true,
-                    labelText: "Enter Date",
-                    hintText: "Date",
+                    labelText: "Enter number of people you can see",
+                    hintText: "Slots",
                     border: OutlineInputBorder()),
       )),
        Padding(
@@ -89,10 +91,11 @@ class Booklec extends StatelessWidget {
                         borderSide: BorderSide(color: Colors.blueGrey)),
                     fillColor: Colors.white,
                     filled: true,
-                    labelText: "Enter Date",
-                    hintText: "Date",
+                    labelText: "Enter the hours available",
+                    hintText: "Hours",
                     border: OutlineInputBorder()),
       )),
+      ElevatedButton(onPressed: (){}, child: Text("Set Appointment"))
       ],)
             
           
