@@ -1,7 +1,7 @@
 // ignore_for_file: unused_import, avoid_unnecessary_containers
 
 // ignore: avoid_web_libraries_in_flutter
-import 'dart:js_util';
+
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

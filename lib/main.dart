@@ -1,6 +1,6 @@
 // ignore_for_file: unused_import
 
-// ignore: avoid_web_libraries_in_flutter
+ 
 
 
 import 'package:firebase_core/firebase_core.dart';
@@ -25,7 +25,7 @@ Future<void> main(List<String> args)  async {
   WidgetsFlutterBinding.ensureInitialized();await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MaterialApp(
     title: "link up ",
-    home: Homepage(
+    home: const Homepage(
      // obsecureText: true,
      // hintText: '',
     ),
@@ -35,7 +35,7 @@ Future<void> main(List<String> args)  async {
       '/lecturer/': (context) => const Lecturer(),
       '/Signup/':(context) => SignUp(obsecureText: true, hintText: ''),
       '/Student/': (context) => const Studentfirstpage(),
-      '/bookappointment/':(context) =>  Bookappointment()
+      '/bookappointment/':(context) =>  const Bookappointment()
   } ,
     debugShowCheckedModeBanner: false,
   ));
@@ -45,6 +45,7 @@ class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _HomepageState createState() => _HomepageState();
 }
 
@@ -60,23 +61,32 @@ class _HomepageState extends State<Homepage> {
     final User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       // User is logged in, navigate to the next page
-      Navigator.of(context as BuildContext).pushNamedAndRemoveUntil('/Firstpage/', (route) => false);
-    } else {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+               return const Firstpage();
+        }));} else {
       // User is not logged in, show the login screen
-      Navigator.of(context as BuildContext).pushNamedAndRemoveUntil('/Login/', (route) => false);
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+               return Login(hintText: '', obsecureText: true,);
+        }));}
     }
+    
+      @override
+      Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+      }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Colors.white24,
       body: Center(
         child: CircularProgressIndicator(), // You can show a loading indicator while checking authentication
       ),
     );
   }
-}
+
 
 
 

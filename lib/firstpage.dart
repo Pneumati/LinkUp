@@ -55,7 +55,9 @@ class _FirstpageState extends State<Firstpage> {
               dense: true,
               subtitle: TextButton(
                   onPressed: ()  {
-                    Navigator.of(context).pushNamed('/lecturer/', );
+                     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+               return const Lecturer();
+             },));
                   },
                   child: const Text(
                     "A Lecturer",
@@ -72,7 +74,9 @@ class _FirstpageState extends State<Firstpage> {
             dense: true,
             subtitle: TextButton(
                 onPressed: ()  {
-                Navigator.of(context).pushNamed('/Student/', );
+                         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+               return const Studentfirstpage();
+             },));
                 },
                 child: const Text(
                   " A Student",

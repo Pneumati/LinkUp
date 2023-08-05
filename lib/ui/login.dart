@@ -120,7 +120,9 @@ class _LoginState extends State<Login> {
                try{
                 await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password,);
                 // ignore: use_build_context_synchronously
-                Navigator.of(context).pushNamed('/Firstpage/',);
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+               return Login(obsecureText: true, hintText: '');
+             },));
                } 
                on FirebaseAuthException catch (e) {
               if (e.code == 'user-not-found') {
@@ -148,7 +150,9 @@ class _LoginState extends State<Login> {
 
 
          TextButton(onPressed: () {
-             Navigator.of(context).pushNamed('/SignUp/', );
+             Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+               return SignUp(obsecureText: true, hintText: '');
+             },));
          }, child: const Text("Sign Up"))
         
         ]
